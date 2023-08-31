@@ -33,6 +33,24 @@ ThemeData getApplicationTheme() {
 
     //button theme
 
+    buttonTheme: ButtonThemeData(
+      shape: StadiumBorder(),
+      disabledColor: ColorManager.grey1,
+      buttonColor: ColorManager.primary,
+      splashColor: ColorManager.primaryOpacity70,
+    ),
+
+    //elevated Button theme
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        textStyle: getRegularTextStyle(color: ColorManager.white),
+        primary: ColorManager.primary,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppSize.s8),
+        ),
+      ),
+    ),
+
     //text theme
 
     //input decoration theme (text form field)
