@@ -101,7 +101,12 @@ class _OnBoardingViewState extends State<OnBoardingView> {
               child: SvgPicture.asset(ImageAssets.leftArrowIc),
             ),
             onTap: () {
-              //TODO: Go to next button
+              //Go to previous slide
+              _pageController.animateToPage(
+                _getPreviousIndex(),
+                duration: Duration(milliseconds: DurationConstant.d300),
+                curve: Curves.bounceInOut,
+              );
             },
           ),
         ),
@@ -125,12 +130,33 @@ class _OnBoardingViewState extends State<OnBoardingView> {
               child: SvgPicture.asset(ImageAssets.rightArrowIc),
             ),
             onTap: () {
-              //TODO: Go to next button
+              //Go to next slide
+              _pageController.animateToPage(
+                _getNextIndex(),
+                duration: Duration(milliseconds: DurationConstant.d300),
+                curve: Curves.bounceInOut,
+              );
             },
           ),
         ),
       ],
     );
+  }
+
+  int _getPreviousIndex() {
+    int previousIndex = _currentPage - 1; // -1
+    if (previousIndex == -1) {
+      _currentPage = _sliderList.length - 1; // infinite loop
+    }
+    return _currentPage;
+  }
+
+  int _getNextIndex() {
+    int nextIndex = _currentPage + 1; // +1
+    if (nextIndex == _sliderList.length) {
+      _currentPage = 0; // infinite loop to go to first item inside the slider
+    }
+    return _currentPage;
   }
 
   Widget _getProperCircle(int index) {
