@@ -30,17 +30,26 @@ class OnBoardingViewModel extends BaseViewModel
 
   @override
   void goNext() {
-    // TODO: implement goNext
+    int nextIndex = ++_currentPage; // +1
+    if (nextIndex == _sliderList.length) {
+      _currentPage = 0; // infinite loop to go to first item inside the slider
+    }
+    _postDataToView();
   }
 
   @override
   void goPrevious() {
-    // TODO: implement goPrevious
+    int previousIndex = --_currentPage; // -1
+    if (previousIndex == -1) {
+      _currentPage = _sliderList.length - 1; // infinite loop
+    }
+    _postDataToView();
   }
 
   @override
   void onPageChanged(int index) {
-    // TODO: implement onPageChanged
+    _currentPage = index;
+    _postDataToView();
   }
 
   @override
