@@ -4,7 +4,7 @@ import 'package:advance_flutter/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import '../resources/routes_manager.dart';
 import '../resources/strings_manager.dart';
 
 class OnBoardingView extends StatefulWidget {
@@ -48,7 +48,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
       backgroundColor: ColorManager.white,
       appBar: AppBar(
         backgroundColor: ColorManager.white,
-        elevation: AppSize.s1_5,
+        elevation: AppSize.s0,
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: ColorManager.white,
           statusBarBrightness: Brightness.dark,
@@ -74,9 +74,13 @@ class _OnBoardingViewState extends State<OnBoardingView> {
           Align(
             alignment: Alignment.centerRight,
             child: TextButton(
-              onPressed: () {},
-              child: const Text(
+              onPressed: () {
+                //Go to login screen
+                Navigator.pushNamed(context, Routes.loginRoute);
+              },
+              child: Text(
                 AppStrings.skip,
+                style: Theme.of(context).textTheme.subtitle2,
                 textAlign: TextAlign.end,
               ),
             ),
@@ -88,63 +92,66 @@ class _OnBoardingViewState extends State<OnBoardingView> {
   }
 
   Widget _getBottomSheetWidget() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Padding(
-          //left arrow
-          padding: EdgeInsets.all(AppPadding.p14),
-          child: GestureDetector(
-            child: SizedBox(
-              height: AppSize.s20,
-              width: AppSize.s20,
-              child: SvgPicture.asset(ImageAssets.leftArrowIc),
-            ),
-            onTap: () {
-              //Go to previous slide
-              _pageController.animateToPage(
-                _getPreviousIndex(),
-                duration: Duration(milliseconds: DurationConstant.d300),
-                curve: Curves.bounceInOut,
-              );
-            },
-          ),
-        ),
-        // circles indicator
-        Row(
-          children: [
-            for (int i = 0; i < _sliderList.length; i++)
-              Padding(
-                padding: EdgeInsets.all(AppPadding.p8),
-                child: _getProperCircle(i),
+    return Container(
+      color: ColorManager.primary,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(
+            //left arrow
+            padding: EdgeInsets.all(AppPadding.p14),
+            child: GestureDetector(
+              child: SizedBox(
+                height: AppSize.s20,
+                width: AppSize.s20,
+                child: SvgPicture.asset(ImageAssets.leftArrowIc),
               ),
-          ],
-        ),
-        Padding(
-          //right arrow
-          padding: EdgeInsets.all(AppPadding.p14),
-          child: GestureDetector(
-            child: SizedBox(
-              height: AppSize.s20,
-              width: AppSize.s20,
-              child: SvgPicture.asset(ImageAssets.rightArrowIc),
+              onTap: () {
+                //Go to previous slide
+                _pageController.animateToPage(
+                  _getPreviousIndex(),
+                  duration: Duration(milliseconds: DurationConstant.d300),
+                  curve: Curves.bounceInOut,
+                );
+              },
             ),
-            onTap: () {
-              //Go to next slide
-              _pageController.animateToPage(
-                _getNextIndex(),
-                duration: Duration(milliseconds: DurationConstant.d300),
-                curve: Curves.bounceInOut,
-              );
-            },
           ),
-        ),
-      ],
+          // circles indicator
+          Row(
+            children: [
+              for (int i = 0; i < _sliderList.length; i++)
+                Padding(
+                  padding: EdgeInsets.all(AppPadding.p8),
+                  child: _getProperCircle(i),
+                ),
+            ],
+          ),
+          Padding(
+            //right arrow
+            padding: EdgeInsets.all(AppPadding.p14),
+            child: GestureDetector(
+              child: SizedBox(
+                height: AppSize.s20,
+                width: AppSize.s20,
+                child: SvgPicture.asset(ImageAssets.rightArrowIc),
+              ),
+              onTap: () {
+                //Go to next slide
+                _pageController.animateToPage(
+                  _getNextIndex(),
+                  duration: Duration(milliseconds: DurationConstant.d300),
+                  curve: Curves.bounceInOut,
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 
   int _getPreviousIndex() {
-    int previousIndex = _currentPage - 1; // -1
+    int previousIndex = --_currentPage; // -1
     if (previousIndex == -1) {
       _currentPage = _sliderList.length - 1; // infinite loop
     }
@@ -152,7 +159,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
   }
 
   int _getNextIndex() {
-    int nextIndex = _currentPage + 1; // +1
+    int nextIndex = ++_currentPage; // +1
     if (nextIndex == _sliderList.length) {
       _currentPage = 0; // infinite loop to go to first item inside the slider
     }
