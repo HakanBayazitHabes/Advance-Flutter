@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import '../../domain/model.dart';
 import '../base/baseviewmodel.dart';
 import '../resources/assets_manager.dart';
 import '../resources/strings_manager.dart';
@@ -10,7 +11,7 @@ class OnBoardingViewModel extends BaseViewModel
   // stream constrollers
 
   final StreamController _streamController =
-      StreamController<SlideViewObject>();
+      StreamController<SliderViewObject>();
 
   late final List<SliderObject> _sliderList;
   int _currentPage = 0;
@@ -29,21 +30,21 @@ class OnBoardingViewModel extends BaseViewModel
   }
 
   @override
-  void goNext() {
+  int goNext() {
     int nextIndex = ++_currentPage; // +1
     if (nextIndex == _sliderList.length) {
       _currentPage = 0; // infinite loop to go to first item inside the slider
     }
-    _postDataToView();
+    return _currentPage;
   }
 
   @override
-  void goPrevious() {
+  int goPrevious() {
     int previousIndex = --_currentPage; // -1
     if (previousIndex == -1) {
       _currentPage = _sliderList.length - 1; // infinite loop
     }
-    _postDataToView();
+    return _currentPage;
   }
 
   @override
@@ -59,7 +60,7 @@ class OnBoardingViewModel extends BaseViewModel
   //outputs
   @override
   // TODO: implement outputSliderViewObject
-  Stream<SlideViewObject> get outputSliderViewObject =>
+  Stream<SliderViewObject> get outputSliderViewObject =>
       _streamController.stream.map((slideViewObject) => slideViewObject);
 
   //private function
@@ -87,7 +88,7 @@ class OnBoardingViewModel extends BaseViewModel
       ];
 
   _postDataToView() {
-    inputSliderViewObject.add(SlideViewObject(
+    inputSliderViewObject.add(SliderViewObject(
         _sliderList[_currentPage], _sliderList.length, _currentPage));
   }
 }
@@ -104,14 +105,14 @@ abstract mixin class OnBoardingViewModelInputs {
 
 //outputs mean data or results that will be sent from our view model to our view
 abstract mixin class OnBoardingViewModelOutputs {
-  Stream<SlideViewObject>
+  Stream<SliderViewObject>
       get outputSliderViewObject; //this is the way to get data from the stream .. stream output
 }
 
-class SlideViewObject {
+class SliderViewObject {
   SliderObject sliderObject;
   int numOfSlides;
   int currentIndex;
 
-  SlideViewObject(this.sliderObject, this.numOfSlides, this.currentIndex);
+  SliderViewObject(this.sliderObject, this.numOfSlides, this.currentIndex);
 }
