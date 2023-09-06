@@ -1,9 +1,11 @@
+import 'package:advance_flutter/presentation/onBoarding/onboarding_viewmodel.dart';
 import 'package:advance_flutter/presentation/resources/assets_manager.dart';
 import 'package:advance_flutter/presentation/resources/color_manager.dart';
 import 'package:advance_flutter/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../domain/model.dart';
 import '../resources/routes_manager.dart';
 import '../resources/strings_manager.dart';
 
@@ -16,10 +18,24 @@ class OnBoardingView extends StatefulWidget {
 
 class _OnBoardingViewState extends State<OnBoardingView> {
   PageController _pageController = PageController(initialPage: 0);
+  OnBoardingViewModel _viewModel = OnBoardingViewModel();
 
+  _bind() {
+    _viewModel.start();
+  }
+
+  @override
+  void initState() {
+    _bind();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    return _getContentWidget();
+  }
+
+  Widget _getContentWidget() {
     return Scaffold(
       backgroundColor: ColorManager.white,
       appBar: AppBar(
@@ -126,22 +142,6 @@ class _OnBoardingViewState extends State<OnBoardingView> {
     );
   }
 
-  int _getPreviousIndex() {
-    int previousIndex = --_currentPage; // -1
-    if (previousIndex == -1) {
-      _currentPage = _sliderList.length - 1; // infinite loop
-    }
-    return _currentPage;
-  }
-
-  int _getNextIndex() {
-    int nextIndex = ++_currentPage; // +1
-    if (nextIndex == _sliderList.length) {
-      _currentPage = 0; // infinite loop to go to first item inside the slider
-    }
-    return _currentPage;
-  }
-
   Widget _getProperCircle(int index) {
     return _currentPage == index
         ? SvgPicture.asset(ImageAssets.hollowCircleIc) //selecrted slider
@@ -150,7 +150,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
 
   @override
   void dispose() {
-    //TODO: implement dispose
+    _viewModel.dispose();
     super.dispose();
   }
 }
@@ -188,12 +188,4 @@ class OnBoardingPage extends StatelessWidget {
       SvgPicture.asset(_sliderObject.image),
     ]);
   }
-}
-
-class SliderObject {
-  String title;
-  String subtitle;
-  String image;
-
-  SliderObject(this.title, this.subtitle, this.image);
 }
