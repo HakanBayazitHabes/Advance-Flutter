@@ -1,3 +1,5 @@
+import 'package:advance_flutter/data/network/failure.dart';
+
 enum DataSource {
   SUCCESS,
   NO_CONTENT,
@@ -12,6 +14,46 @@ enum DataSource {
   SEND_TIMEOUT,
   CACHE_ERROR,
   NO_INTERNET_CONNECTION,
+}
+
+extension DataSourceExtension on DataSource {
+  Failure getFailure() {
+    switch (this) {
+      case DataSource.SUCCESS:
+        return Failure(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
+      case DataSource.NO_CONTENT:
+        return Failure(ResponseCode.NO_CONTENT, ResponseMessage.NO_CONTENT);
+      case DataSource.BAD_REQUEST:
+        return Failure(ResponseCode.BAD_REQUEST, ResponseMessage.BAD_REQUEST);
+      case DataSource.UNAUTHORIZED:
+        return Failure(ResponseCode.UNAUTHORIZED, ResponseMessage.UNAUTHORIZED);
+      case DataSource.FORBIDDEN:
+        return Failure(ResponseCode.FORBIDDEN, ResponseMessage.FORBIDDEN);
+      case DataSource.NOT_FOUND:
+        return Failure(ResponseCode.NOT_FOUND, ResponseMessage.NOT_FOUND);
+      case DataSource.INTERNAL_SERVER_ERROR:
+        return Failure(ResponseCode.INTERNAL_SERVER_ERROR,
+            ResponseMessage.INTERNAL_SERVER_ERROR);
+      case DataSource.CONNECTION_TIMEOUT:
+        return Failure(ResponseCode.CONNECTION_TIMEOUT,
+            ResponseMessage.CONNECTION_TIMEOUT);
+      case DataSource.CANCEL:
+        return Failure(ResponseCode.CANCEL, ResponseMessage.CANCEL);
+      case DataSource.RECEIVE_TIMEOUT:
+        return Failure(
+            ResponseCode.RECEIVE_TIMEOUT, ResponseMessage.RECEIVE_TIMEOUT);
+      case DataSource.SEND_TIMEOUT:
+        return Failure(ResponseCode.SEND_TIMEOUT, ResponseMessage.SEND_TIMEOUT);
+      case DataSource.CACHE_ERROR:
+        return Failure(ResponseCode.CACHE_ERROR, ResponseMessage.CACHE_ERROR);
+      case DataSource.NO_INTERNET_CONNECTION:
+        return Failure(ResponseCode.NO_INTERNET_CONNECTION,
+            ResponseMessage.NO_INTERNET_CONNECTION);
+      default:
+        return Failure(
+            ResponseCode.UNKNOWN_ERROR, ResponseMessage.UNKNOWN_ERROR);
+    }
+  }
 }
 
 class ResponseCode {
@@ -42,7 +84,8 @@ class ResponseMessage {
   static const String UNAUTHORIZED = "User is unauthorised, try again later";
   static const String FORBIDDEN = "User is forbidden, try again later";
   static const String NOT_FOUND = "Url is not found, try again later";
-  static const String INTERNAL_SERVER_ERROR = "Some thing went wrong, try again later";
+  static const String INTERNAL_SERVER_ERROR =
+      "Some thing went wrong, try again later";
 
   //local status code
   static const String UNKNOWN_ERROR = "Some thing went wrong, try again later";
@@ -51,5 +94,6 @@ class ResponseMessage {
   static const String RECEIVE_TIMEOUT = "Timeout error, try again later";
   static const String SEND_TIMEOUT = "Timeout error, try again later";
   static const String CACHE_ERROR = "Cache error, try again later";
-  static const String NO_INTERNET_CONNECTION = "Please check your internet connection";
+  static const String NO_INTERNET_CONNECTION =
+      "Please check your internet connection";
 }
