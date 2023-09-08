@@ -1,4 +1,5 @@
 import 'package:advance_flutter/data/mapper/mapper.dart';
+import 'package:advance_flutter/data/network/error_handler.dart';
 import 'package:advance_flutter/data/network/failure.dart';
 import 'package:advance_flutter/data/request/request.dart';
 import 'package:advance_flutter/domain/model.dart';
@@ -18,14 +19,19 @@ class RepositoryImpl extends Repository {
   Future<Either<Failure, Authentication>> login(
       LoginRequest loginRequest) async {
     if (await networkInfo.isConnectedAsync) {
-      final response = await remoteDataSource.login(loginRequest);
-      if (response.status == 0) {
-        return Right(response.toDomain());
-      } else {
-        return Left(Failure(409, response.message ?? "Error"));
+      try {
+        final response = await remoteDataSource.login(loginRequest);
+        if (response.status == ApiInternalStatus.SUCCESS) {
+          return Right(response.toDomain());
+        } else {
+          return Left(Failure(response.status ?? ApiInternalStatus.FAILURE,
+              response.message ?? ResponseMessage.DEFAULT));
+        }
+      } catch (error) {
+        return (Left(ErrorHandler.handleError(error).failure));
       }
     } else {
-      return Left(Failure(501, "Please check your internet connection"));
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
     }
   }
 }
