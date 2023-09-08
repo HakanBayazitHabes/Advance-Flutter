@@ -2,8 +2,8 @@ import 'package:advance_flutter/data/mapper/mapper.dart';
 import 'package:advance_flutter/data/network/error_handler.dart';
 import 'package:advance_flutter/data/network/failure.dart';
 import 'package:advance_flutter/data/request/request.dart';
-import 'package:advance_flutter/domain/model.dart';
-import 'package:advance_flutter/domain/repository.dart';
+import 'package:advance_flutter/domain/model/model.dart';
+import 'package:advance_flutter/domain/repository/repository.dart';
 import 'package:dartz/dartz.dart';
 
 import '../data_source/remote_data_source.dart';
