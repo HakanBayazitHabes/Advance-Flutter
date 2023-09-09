@@ -88,11 +88,11 @@ class __$$_LoginObjectCopyWithImpl<$Res>
     Object? password = freezed,
   }) {
     return _then(_$_LoginObject(
-      userName: freezed == userName
+      freezed == userName
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
               as String?,
-      password: freezed == password
+      freezed == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -103,7 +103,7 @@ class __$$_LoginObjectCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_LoginObject implements _LoginObject {
-  _$_LoginObject({this.userName, this.password});
+  _$_LoginObject(this.userName, this.password);
 
   @override
   final String? userName;
@@ -137,7 +137,7 @@ class _$_LoginObject implements _LoginObject {
 }
 
 abstract class _LoginObject implements LoginObject {
-  factory _LoginObject({final String? userName, final String? password}) =
+  factory _LoginObject(final String? userName, final String? password) =
       _$_LoginObject;
 
   @override
