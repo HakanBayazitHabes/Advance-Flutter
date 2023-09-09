@@ -19,6 +19,7 @@ class _LoginViewState extends State<LoginView> {
 
   TextEditingController _userNameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
 
   _bind() {
@@ -45,81 +46,85 @@ class _LoginViewState extends State<LoginView> {
   Widget _getContentWidget() {
     return Scaffold(
         body: Container(
-          padding: EdgeInsets.only(top: AppPadding.p100),
-          color: ColorManager.white,
-          child: SingleChildScrollView(
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  SvgPicture.asset(ImageAssets.loginIc),
-                  SizedBox(
-                    height: AppSize.s28,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: AppPadding.p28, right: AppPadding.p28),
-                    child: StreamBuilder<bool>(
-                      stream: _loginViewModel.outputIsUserNameValid,
-                      builder: (context, snapshot) {
-                        return TextFormField(
-                          keyboardType: TextInputType.emailAddress,
-                          controller: _userNameController,
-                          decoration: InputDecoration(
-                            hintText: AppStrings.userName,
-                            labelText: AppStrings.userName,
-                            errorText: (snapshot.data ?? true)
-                                ? null
-                                : AppStrings.userNameError,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    height: AppSize.s28,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: AppPadding.p28, right: AppPadding.p28),
-                    child: StreamBuilder<bool>(
-                      stream: _loginViewModel.outputIsPasswordValid,
-                      builder: (context, snapshot) {
-                        return TextFormField(
-                          keyboardType: TextInputType.visiblePassword,
-                          controller: _userNameController,
-                          decoration: InputDecoration(
-                            hintText: AppStrings.password,
-                            labelText: AppStrings.password,
-                            errorText: (snapshot.data ?? true)
-                                ? null
-                                : AppStrings.passwordError,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    height: AppSize.s28,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: AppPadding.p28, right: AppPadding.p28),
-                    child: StreamBuilder<bool>(
-                      stream:, // todo add me later
-                      builder: (context, snapshot) {
-                        return ElevatedButton(
-                          onPressed: () {},
-                          child: Text(AppStrings.login),
-                        );
-                      },
-                    ),
-                  ),
-                ],
+      padding: EdgeInsets.only(top: AppPadding.p100),
+      color: ColorManager.white,
+      child: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              SvgPicture.asset(ImageAssets.loginIc),
+              SizedBox(
+                height: AppSize.s28,
               ),
-            ),
-          ),)
-    );
+              Padding(
+                padding: EdgeInsets.only(
+                    left: AppPadding.p28, right: AppPadding.p28),
+                child: StreamBuilder<bool>(
+                  stream: _loginViewModel.outputIsUserNameValid,
+                  builder: (context, snapshot) {
+                    return TextFormField(
+                      keyboardType: TextInputType.emailAddress,
+                      controller: _userNameController,
+                      decoration: InputDecoration(
+                        hintText: AppStrings.userName,
+                        labelText: AppStrings.userName,
+                        errorText: (snapshot.data ?? true)
+                            ? null
+                            : AppStrings.userNameError,
+                      ),
+                    );
+                  },
+                ),
+              ),
+              SizedBox(
+                height: AppSize.s28,
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                    left: AppPadding.p28, right: AppPadding.p28),
+                child: StreamBuilder<bool>(
+                  stream: _loginViewModel.outputIsPasswordValid,
+                  builder: (context, snapshot) {
+                    return TextFormField(
+                      keyboardType: TextInputType.visiblePassword,
+                      controller: _userNameController,
+                      decoration: InputDecoration(
+                        hintText: AppStrings.password,
+                        labelText: AppStrings.password,
+                        errorText: (snapshot.data ?? true)
+                            ? null
+                            : AppStrings.passwordError,
+                      ),
+                    );
+                  },
+                ),
+              ),
+              SizedBox(
+                height: AppSize.s28,
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                    left: AppPadding.p28, right: AppPadding.p28),
+                child: StreamBuilder<bool>(
+                  stream: _loginViewModel.outputIsAllInputsValid,
+                  builder: (context, snapshot) {
+                    return ElevatedButton(
+                      onPressed: (snapshot.data ?? false)
+                          ? () {
+                              _loginViewModel.login();
+                            }
+                          : null,
+                      child: Text(AppStrings.login),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ));
   }
 
   @override
