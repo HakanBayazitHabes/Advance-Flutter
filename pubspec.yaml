@@ -45,6 +45,7 @@ dependencies:
   pretty_dio_logger: ^1.2.0-beta-1
   shared_preferences: ^2.0.8
   device_info_plus: ^9.0.3
+  freezed: ^2.4.1
 
 dev_dependencies:
   flutter_test:
