@@ -1,13 +1,8 @@
 import 'package:advance_flutter/app/di.dart';
-import 'package:advance_flutter/data/data_source/remote_data_source.dart';
-import 'package:advance_flutter/data/repository/repository_impl.dart';
-import 'package:advance_flutter/domain/repository/repository.dart';
-import 'package:advance_flutter/domain/usecase/login_usecase.dart';
 import 'package:advance_flutter/presentation/login/login_viewmodel.dart';
 import 'package:advance_flutter/presentation/resources/strings_manager.dart';
 import 'package:advance_flutter/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
