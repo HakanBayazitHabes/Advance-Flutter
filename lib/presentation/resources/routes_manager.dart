@@ -4,6 +4,7 @@ import 'package:advance_flutter/presentation/store_details/store_details.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../app/di.dart';
 import '../login/login.dart';
 import '../main/main_view.dart';
 import '../onBoarding/onBoarding.dart';
@@ -26,6 +27,7 @@ class RouteGenerator {
       case Routes.splashRoute:
         return MaterialPageRoute(builder: (_) => const SplashView());
       case Routes.loginRoute:
+        initLoginModule();
         return MaterialPageRoute(builder: (_) => const LoginView());
       case Routes.onBoardingRoute:
         return MaterialPageRoute(builder: (_) => const OnBoardingView());
