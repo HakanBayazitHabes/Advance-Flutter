@@ -21,7 +21,7 @@ class DioFactory {
     String language = await _appPreferences.getAppLanguage();
 
     Map<String, String> headers = {
-      CONTENT_TYPE: APPLICATION_JSON,
+      CONTENT_TYPE: CONTENT_TYPE,
       ACCEPT: APPLICATION_JSON,
       AUTHORIZATION: Constant.token,
       DEFAULT_LANGUAGE: language,
@@ -40,7 +40,7 @@ class DioFactory {
       dio.interceptors.add(PrettyDioLogger(
         requestHeader: true,
         requestBody: true,
-        responseHeader: false,
+        responseHeader: true,
       ));
     }
 

@@ -13,6 +13,7 @@ Future<DeviceInfo> getDeviceDetails() async {
   IosDeviceInfo iosInfo = await deviceInfoPlugin.iosInfo;
 
   try {
+    // ignore: unnecessary_null_comparison
     if (androidInfo != null) {
       name = androidInfo.brand + " " + androidInfo.model;
       identifier = androidInfo.id;

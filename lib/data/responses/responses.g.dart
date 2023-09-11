@@ -21,14 +21,14 @@ CustomerResponse _$CustomerResponseFromJson(Map<String, dynamic> json) =>
     CustomerResponse(
       json['id'] as String?,
       json['name'] as String?,
-      json['numOfnotifications'] as int?,
+      json['numOfNotifications'] as int?,
     );
 
 Map<String, dynamic> _$CustomerResponseToJson(CustomerResponse instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'numOfnotifications': instance.numOfnotifications,
+      'numOfNotifications': instance.numOfNotifications,
     };
 
 ContactsResponse _$ContactsResponseFromJson(Map<String, dynamic> json) =>

@@ -46,16 +46,18 @@ class LoginViewModel extends BaseViewModel
 
   @override
   login() async {
-    (await _loginUseCase.execute(LoginUseCaseInput(
-            loginObject.userName.toString(), loginObject.password.toString())))
+    (await _loginUseCase.execute(
+            LoginUseCaseInput(loginObject.userName, loginObject.password)))
         .fold(
             (failure) => {
+                  print("buraya giriş yaptı"),
                   // left -> failure (failure)
                   print(failure.message),
-                }, (data) {
-      // right -> success (data)
-      print(data.customer?.name);
-    });
+                },
+            (data) => {
+                  // right -> success (data)
+                  print(data.customer?.name)
+                });
   }
 
   @override
