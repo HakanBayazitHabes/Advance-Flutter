@@ -1,5 +1,6 @@
 import 'package:advance_flutter/data/mapper/mapper.dart';
 import 'package:advance_flutter/presentation/common/state_renderer/state_renderer.dart';
+import 'package:flutter/material.dart';
 
 import '../../resources/strings_manager.dart';
 
@@ -63,3 +64,30 @@ class EmptyState extends FlowState {
   @override
   String getMessage() => message;
 }
+
+extension FlowStateExtension on FlowState {
+  Widget getScreenWidget(BuildContext context, Widget contentScreenWidget,
+      Function retryActionFunction) {
+    switch (this.runtimeType) {
+      case LoadingState:
+        {
+          break;
+        }
+      case ErrorState:
+        {
+          break;
+        }
+      case ContentState:
+        {
+          break;
+        }
+      case EmptyState:
+        {
+          break;
+        }
+      default:
+        {
+          break;
+        }
+    }
+  }
