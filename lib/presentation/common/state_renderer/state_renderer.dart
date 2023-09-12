@@ -62,15 +62,15 @@ class StateRenderer extends StatelessWidget {
             [_getAnimatedImage(JsonAssets.error), _getMessage(message)]);
       case StateRendererType.FULL_SCREEN_ERROR_STATE:
         return _getItemsInColumn([
-          _getAnimatedImage(JsonAssets.empty),
+          _getAnimatedImage(JsonAssets.error),
           _getMessage(failure.message),
           _getRetryButton(AppStrings.retry_again, context)
         ]);
-
       case StateRendererType.CONTENT_SCREEN_STATE:
-        break;
+        return Container();
       case StateRendererType.EMPTY_SCREEN_STATE:
-        return _getItemsInColumn([_getAnimatedImage(), _getMessage(message)]);
+        return _getItemsInColumn(
+            [_getAnimatedImage(JsonAssets.empty), _getMessage(message)]);
       default:
         return Container();
     }
