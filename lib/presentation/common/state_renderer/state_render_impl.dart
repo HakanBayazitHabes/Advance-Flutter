@@ -76,7 +76,8 @@ extension FlowStateExtension on FlowState {
             showPopUp(context, getStateRendererType(), getMessage());
             // return the content ui of the screen
             return contentScreenWidget;
-          } else {
+          } else // StateRendererType.FULL_SCREEN_LOADING_STATE
+          {
             return StateRenderer(
               stateRendererType: getStateRendererType(),
               message: getMessage(),
@@ -86,19 +87,34 @@ extension FlowStateExtension on FlowState {
         }
       case ErrorState:
         {
-          break;
+          if (getStateRendererType() == StateRendererType.POPUP_ERROR_STATE) {
+            // showing popup dialog
+            showPopUp(context, getStateRendererType(), getMessage());
+            // return the content ui of the screen
+            return contentScreenWidget;
+          } else // StateRendererType.FULL_SCREEN_ERROR_STATE
+          {
+            return StateRenderer(
+              stateRendererType: getStateRendererType(),
+              message: getMessage(),
+              retryActionFunction: retryActionFunction,
+            );
+          }
         }
       case ContentState:
         {
-          break;
+          return contentScreenWidget;
         }
       case EmptyState:
         {
-          break;
+          return StateRenderer(
+              stateRendererType: getStateRendererType(),
+              message: getMessage(),
+              retryActionFunction: retryActionFunction);
         }
       default:
         {
-          break;
+          return contentScreenWidget;
         }
     }
   }
