@@ -21,7 +21,7 @@ class DioFactory {
     String language = await _appPreferences.getAppLanguage();
 
     Map<String, String> headers = {
-      CONTENT_TYPE: CONTENT_TYPE,
+      CONTENT_TYPE: APPLICATION_JSON,
       ACCEPT: APPLICATION_JSON,
       AUTHORIZATION: Constant.token,
       DEFAULT_LANGUAGE: language,
