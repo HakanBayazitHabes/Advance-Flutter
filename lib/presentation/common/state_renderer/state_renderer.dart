@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:advance_flutter/data/mapper/mapper.dart';
 import 'package:advance_flutter/data/network/failure.dart';
 import 'package:advance_flutter/presentation/resources/assets_manager.dart';
