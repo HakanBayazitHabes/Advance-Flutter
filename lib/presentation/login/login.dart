@@ -1,3 +1,4 @@
+import 'package:advance_flutter/app/app_prefs.dart';
 import 'package:advance_flutter/app/di.dart';
 import 'package:advance_flutter/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:advance_flutter/presentation/login/login_viewmodel.dart';
@@ -19,6 +20,7 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   LoginViewModel _loginViewModel = instance<LoginViewModel>();
+  AppPreferences _appPreferences = instance<AppPreferences>();
 
   TextEditingController _userNameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
@@ -36,6 +38,7 @@ class _LoginViewState extends State<LoginView> {
     _loginViewModel.isUserLoggedInSuccessfullyStreamController.stream
         .listen((isSuccessLoggedIn) {
       SchedulerBinding.instance.addPostFrameCallback((_) {
+        _appPreferences.setUserLoggedIn();
         Navigator.pushReplacementNamed(context, Routes.mainRoute);
       });
     });
