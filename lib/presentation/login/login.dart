@@ -4,6 +4,7 @@ import 'package:advance_flutter/presentation/login/login_viewmodel.dart';
 import 'package:advance_flutter/presentation/resources/strings_manager.dart';
 import 'package:advance_flutter/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
@@ -31,6 +32,12 @@ class _LoginViewState extends State<LoginView> {
     });
     _passwordController.addListener(() {
       _loginViewModel.setPassword(_passwordController.text);
+    });
+    _loginViewModel.isUserLoggedInSuccessfullyStreamController.stream
+        .listen((isSuccessLoggedIn) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushReplacementNamed(context, Routes.mainRoute);
+      });
     });
   }
 

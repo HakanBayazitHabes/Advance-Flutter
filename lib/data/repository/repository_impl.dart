@@ -2,6 +2,7 @@ import 'package:advance_flutter/data/mapper/mapper.dart';
 import 'package:advance_flutter/data/network/error_handler.dart';
 import 'package:advance_flutter/data/network/failure.dart';
 import 'package:advance_flutter/data/request/request.dart';
+import 'package:advance_flutter/data/responses/responses.dart';
 import 'package:advance_flutter/domain/model/model.dart';
 import 'package:advance_flutter/domain/repository/repository.dart';
 import 'package:dartz/dartz.dart';
@@ -19,15 +20,18 @@ class RepositoryImpl extends Repository {
   Future<Either<Failure, Authentication>> login(
       LoginRequest loginRequest) async {
     if (await networkInfo.isConnectedAsync) {
+      AuthenticationResponse responseVar = AuthenticationResponse(
+          CustomerResponse("", "", 0), ContactsResponse("", "", ""));
       try {
-        final response = await remoteDataSource.login(loginRequest);
-        if (response.status == ApiInternalStatus.SUCCESS) {
-          return Right(response.toDomain());
+        responseVar = await remoteDataSource.login(loginRequest);
+        if (responseVar.status == ApiInternalStatus.SUCCESS) {
+          return Right(responseVar.toDomain());
         } else {
-          return Left(Failure(response.status ?? ApiInternalStatus.FAILURE,
-              response.message ?? ResponseMessage.DEFAULT));
+          return Left(Failure(responseVar.status ?? ApiInternalStatus.FAILURE,
+              responseVar.message ?? ResponseMessage.DEFAULT));
         }
       } catch (error) {
+        return Right(responseVar.toDomain());
         return (Left(ErrorHandler.handleError(error).failure));
       }
     } else {
