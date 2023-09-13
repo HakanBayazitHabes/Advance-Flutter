@@ -4,6 +4,7 @@ import 'package:advance_flutter/domain/usecase/login_usecase.dart';
 
 import '../base/baseviewmodel.dart';
 import '../common/freezed_data_classes.dart';
+import '../common/state_renderer/state_render_impl.dart';
 
 class LoginViewModel extends BaseViewModel
     with LoginViewModelInputs, LoginViewModelOutputs {
@@ -32,7 +33,8 @@ class LoginViewModel extends BaseViewModel
 
   @override
   void start() {
-    // TODO: implement start
+    // view tells state renderer, please show the content of the screen
+    inputState.add(ContentState());
   }
 
   @override
