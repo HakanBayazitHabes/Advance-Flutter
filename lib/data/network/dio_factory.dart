@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:advance_flutter/app/app_prefs.dart';
 import 'package:advance_flutter/app/constant.dart';
 import 'package:dio/dio.dart';
@@ -26,6 +28,7 @@ class DioFactory {
       AUTHORIZATION: Constant.token,
       DEFAULT_LANGUAGE: language,
     };
+    dio.interceptors.add(JsonResponseInterceptor());
 
     dio.options = BaseOptions(
       baseUrl: Constant.baseUrl,
@@ -45,5 +48,13 @@ class DioFactory {
     }
 
     return dio;
+  }
+}
+
+class JsonResponseInterceptor extends Interceptor {
+  @override
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
+    response.data = json.decode(response.data);
+    super.onResponse(response, handler);
   }
 }

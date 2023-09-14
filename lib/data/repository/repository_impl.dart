@@ -20,19 +20,38 @@ class RepositoryImpl extends Repository {
   Future<Either<Failure, Authentication>> login(
       LoginRequest loginRequest) async {
     if (await networkInfo.isConnectedAsync) {
-      AuthenticationResponse responseVar = AuthenticationResponse(
-          CustomerResponse("", "", 0), ContactsResponse("", "", ""));
+
       try {
-        responseVar = await remoteDataSource.login(loginRequest);
-        if (responseVar.status == ApiInternalStatus.SUCCESS) {
-          return Right(responseVar.toDomain());
+        AuthenticationResponse response = await remoteDataSource.login(loginRequest);
+        if (response.status == ApiInternalStatus.SUCCESS) {
+          return Right(response.toDomain());
         } else {
-          return Left(Failure(responseVar.status ?? ApiInternalStatus.FAILURE,
-              responseVar.message ?? ResponseMessage.DEFAULT));
+          return Left(Failure(response.status ?? ApiInternalStatus.FAILURE,
+              response.message ?? ResponseMessage.DEFAULT));
         }
       } catch (error) {
-        return Right(responseVar.toDomain());
         return (Left(ErrorHandler.handleError(error).failure));
+      }
+    } else {
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> forgotPassword(String email) async {
+    if (await networkInfo.isConnectedAsync) {
+      try {
+        final response = await remoteDataSource.forgotPassword(email);
+        if (response.status == ApiInternalStatus.SUCCESS) {
+          return Right(response.toDomain());
+        } else {
+          print("başarısız");
+          return Left(Failure(response.status ?? ApiInternalStatus.FAILURE,
+              response.message ?? ResponseMessage.DEFAULT));
+        }
+      } catch (error) {
+        print("başarısız 2");
+        return Left(ErrorHandler.handleError(error).failure);
       }
     } else {
       return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
