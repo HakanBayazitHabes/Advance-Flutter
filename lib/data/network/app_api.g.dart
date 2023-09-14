@@ -80,8 +80,8 @@ class _AppServiceClient implements AppServiceClient {
   Future<AuthenticationResponse> register(
     country_mobile_code,
     user_name,
+    email,
     password,
-    mobile_number,
     profile_picture,
   ) async {
     const _extra = <String, dynamic>{};
@@ -90,8 +90,8 @@ class _AppServiceClient implements AppServiceClient {
     final _data = {
       'country_mobile_code': country_mobile_code,
       'user_name': user_name,
+      'email': email,
       'password': password,
-      'mobile_number': mobile_number,
       'profile_picture': profile_picture,
     };
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -102,7 +102,7 @@ class _AppServiceClient implements AppServiceClient {
     )
             .compose(
               _dio.options,
-              '/customers/login',
+              '/customer/register',
               queryParameters: queryParameters,
               data: _data,
             )
