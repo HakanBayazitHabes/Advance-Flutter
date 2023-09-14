@@ -164,7 +164,7 @@ class _LoginViewState extends State<LoginView> {
                             context, Routes.forgotPasswordRoute);
                       },
                       child: Text(
-                        AppStrings.skip,
+                        AppStrings.forgotPassword,
                         style: Theme.of(context).textTheme.subtitle2,
                       ),
                     ),

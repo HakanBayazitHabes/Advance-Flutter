@@ -45,12 +45,10 @@ class RepositoryImpl extends Repository {
         if (response.status == ApiInternalStatus.SUCCESS) {
           return Right(response.toDomain());
         } else {
-          print("başarısız");
           return Left(Failure(response.status ?? ApiInternalStatus.FAILURE,
               response.message ?? ResponseMessage.DEFAULT));
         }
       } catch (error) {
-        print("başarısız 2");
         return Left(ErrorHandler.handleError(error).failure);
       }
     } else {

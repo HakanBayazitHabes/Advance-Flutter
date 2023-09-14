@@ -14,7 +14,7 @@ class AppStrings {
   static const String onBoardingSubtitle4 =
       "Tut app is an awesome flutter application using clean architecture #4";
 
-  static const String skip = "Forgot Password";
+  static const String skip = "Skip";
 
   static const String userName = "Username";
   static const String userNameError = "Username is wrong";
