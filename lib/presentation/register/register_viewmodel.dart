@@ -6,6 +6,8 @@ import 'package:advance_flutter/presentation/base/baseviewmodel.dart';
 import '../../app/functions.dart';
 import '../../domain/usecase/register_usecase.dart';
 import '../common/freezed_data_classes.dart';
+import '../common/state_renderer/state_render_impl.dart';
+import '../common/state_renderer/state_renderer.dart';
 
 class RegisterViewModel extends BaseViewModel
     with RegisterViewModelInput, RegisterViewModelOutput {
@@ -35,7 +37,31 @@ class RegisterViewModel extends BaseViewModel
   // inputs
   @override
   void start() {
-    // TODO: implement start
+    // view tells state renderer, please show the content of the screen
+    inputState.add(ContentState());
+  }
+
+  @override
+  register() async {
+    inputState.add(
+        LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
+    (await _regsiterUseCase.execute(RegisterUseCaseInput(
+            registerViewObject.mobileNumber,
+            registerViewObject.countryMobileCode,
+            registerViewObject.userName,
+            registerViewObject.email,
+            registerViewObject.password,
+            registerViewObject.profilePicture)))
+        .fold((failure) {
+      print("Hatalı giriş yaptı");
+      // left -> failure (failure)
+      inputState.add(
+          ErrorState(StateRendererType.POPUP_ERROR_STATE, failure.message));
+    }, (data) {
+      // right -> success (data)
+      print("Başarılı giriş yapıldı");
+      inputState.add(ContentState());
+    });
   }
 
   @override
@@ -186,12 +212,6 @@ class RegisterViewModel extends BaseViewModel
   @override
   Stream<File> get outputIsProfilePictureValid =>
       _profilePictureStreamController.stream.map((file) => file);
-
-  @override
-  register() {
-    // TODO: implement register
-    throw UnimplementedError();
-  }
 
   // private method
 
