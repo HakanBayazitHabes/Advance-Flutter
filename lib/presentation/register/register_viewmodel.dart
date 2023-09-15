@@ -51,6 +51,81 @@ class RegisterViewModel extends BaseViewModel
   }
 
   @override
+  setCountryCode(String countryCode) {
+    if (countryCode.isNotEmpty) {
+      // update register view object wit countryCode value
+      registerViewObject =
+          registerViewObject.copyWith(countryMobileCode: countryCode);
+    } else {
+      //reset countryCode value in register view object
+      registerViewObject = registerViewObject.copyWith(countryMobileCode: "");
+    }
+    _validate();
+  }
+
+  @override
+  setEmail(String email) {
+    if (isEmailValid(email)) {
+      // update register view object wit email value
+      registerViewObject = registerViewObject.copyWith(email: email);
+    } else {
+      //reset email value in register view object
+      registerViewObject = registerViewObject.copyWith(email: "");
+    }
+    _validate();
+  }
+
+  @override
+  setMobileNumber(String mobileNumber) {
+    if (_isMobilNumberValid(mobileNumber)) {
+      // update register view object wit mobileNumber value
+      registerViewObject =
+          registerViewObject.copyWith(mobileNumber: mobileNumber);
+    } else {
+      //reset mobileNumber value in register view object
+      registerViewObject = registerViewObject.copyWith(mobileNumber: "");
+    }
+    _validate();
+  }
+
+  @override
+  setPassword(String password) {
+    if (_isPasswordValid(password)) {
+      // update register view object wit password value
+      registerViewObject = registerViewObject.copyWith(password: password);
+    } else {
+      //reset password value in register view object
+      registerViewObject = registerViewObject.copyWith(password: "");
+    }
+    _validate();
+  }
+
+  @override
+  setProfilePicture(File file) {
+    if (file.path.isNotEmpty) {
+      // update register view object wit profilePicture value
+      registerViewObject =
+          registerViewObject.copyWith(profilePicture: file.path);
+    } else {
+      //reset profilePicture value in register view object
+      registerViewObject = registerViewObject.copyWith(profilePicture: "");
+    }
+    _validate();
+  }
+
+  @override
+  setUserName(String userName) {
+    if (_isUserNameValid(userName)) {
+      // update register view object wit username value
+      registerViewObject = registerViewObject.copyWith(userName: userName);
+    } else {
+      //reset username value in register view object
+      registerViewObject = registerViewObject.copyWith(userName: "");
+    }
+    _validate();
+  }
+
+  @override
   Sink get inputEmail => _emailStreamController.sink;
 
   @override
@@ -65,7 +140,15 @@ class RegisterViewModel extends BaseViewModel
   @override
   Sink get inputUserName => _userNameStreamController.sink;
 
+  @override
+  Sink get inputAllInputsValid => _isAllInputsValidStreamController.sink;
+
   // outputs
+  @override
+  // TODO: implement
+  Stream<bool> get outputIsAllInputsValid =>
+      _isAllInputsValidStreamController.stream.map((_) => _validateAllInputs());
+
   @override
   Stream<bool> get outputIsUserNameValid => _userNameStreamController.stream
       .map((userName) => _isUserNameValid(userName));
@@ -101,7 +184,6 @@ class RegisterViewModel extends BaseViewModel
       .map((isPasswordValid) => isPasswordValid ? null : "Invalid Password");
 
   @override
-  // TODO: implement outputIsProfilePictureValid
   Stream<File> get outputIsProfilePictureValid =>
       _profilePictureStreamController.stream.map((file) => file);
 
@@ -111,7 +193,7 @@ class RegisterViewModel extends BaseViewModel
     throw UnimplementedError();
   }
 
-  // primat method
+  // private method
 
   bool _isUserNameValid(String userName) {
     return userName.length >= 8;
@@ -125,73 +207,17 @@ class RegisterViewModel extends BaseViewModel
     return password.length >= 8;
   }
 
-  @override
-  setCountryCode(String countryCode) {
-    if (countryCode.isNotEmpty) {
-      // update register view object wit countryCode value
-      registerViewObject =
-          registerViewObject.copyWith(countryMobileCode: countryCode);
-    } else {
-      //reset countryCode value in register view object
-      registerViewObject = registerViewObject.copyWith(countryMobileCode: "");
-    }
+  bool _validateAllInputs() {
+    return registerViewObject.profilePicture.isNotEmpty &&
+        registerViewObject.userName.isNotEmpty &&
+        registerViewObject.mobileNumber.isNotEmpty &&
+        registerViewObject.email.isNotEmpty &&
+        registerViewObject.password.isNotEmpty &&
+        registerViewObject.countryMobileCode.isNotEmpty;
   }
 
-  @override
-  setEmail(String email) {
-    if (isEmailValid(email)) {
-      // update register view object wit email value
-      registerViewObject = registerViewObject.copyWith(email: email);
-    } else {
-      //reset email value in register view object
-      registerViewObject = registerViewObject.copyWith(email: "");
-    }
-  }
-
-  @override
-  setMobileNumber(String mobileNumber) {
-    if (_isMobilNumberValid(mobileNumber)) {
-      // update register view object wit mobileNumber value
-      registerViewObject =
-          registerViewObject.copyWith(mobileNumber: mobileNumber);
-    } else {
-      //reset mobileNumber value in register view object
-      registerViewObject = registerViewObject.copyWith(mobileNumber: "");
-    }
-  }
-
-  @override
-  setPassword(String password) {
-    if (_isPasswordValid(password)) {
-      // update register view object wit password value
-      registerViewObject = registerViewObject.copyWith(password: password);
-    } else {
-      //reset password value in register view object
-      registerViewObject = registerViewObject.copyWith(password: "");
-    }
-  }
-
-  @override
-  setProfilePicture(File file) {
-    if (file.path.isNotEmpty) {
-      // update register view object wit profilePicture value
-      registerViewObject =
-          registerViewObject.copyWith(profilePicture: file.path);
-    } else {
-      //reset profilePicture value in register view object
-      registerViewObject = registerViewObject.copyWith(profilePicture: "");
-    }
-  }
-
-  @override
-  setUserName(String userName) {
-    if (_isUserNameValid(userName)) {
-      // update register view object wit username value
-      registerViewObject = registerViewObject.copyWith(userName: userName);
-    } else {
-      //reset username value in register view object
-      registerViewObject = registerViewObject.copyWith(userName: "");
-    }
+  _validate() {
+    _isAllInputsValidStreamController.add(null);
   }
 }
 
@@ -219,6 +245,8 @@ abstract mixin class RegisterViewModelInput {
   Sink get inputPassword;
 
   Sink get inputProfilePicture;
+
+  Sink get inputAllInputsValid;
 }
 
 abstract mixin class RegisterViewModelOutput {
@@ -239,4 +267,6 @@ abstract mixin class RegisterViewModelOutput {
   Stream<String?> get outputErrorPassword;
 
   Stream<File> get outputIsProfilePictureValid;
+
+  Stream<bool> get outputIsAllInputsValid;
 }
