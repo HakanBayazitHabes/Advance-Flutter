@@ -46,11 +46,11 @@ class RegisterViewModel extends BaseViewModel
     inputState.add(
         LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
     (await _regsiterUseCase.execute(RegisterUseCaseInput(
-            registerViewObject.mobileNumber,
             registerViewObject.countryMobileCode,
             registerViewObject.userName,
             registerViewObject.email,
             registerViewObject.password,
+            registerViewObject.mobileNumber,
             registerViewObject.profilePicture)))
         .fold((failure) {
       print("Hatalı giriş yaptı");
