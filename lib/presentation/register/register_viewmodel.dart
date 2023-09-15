@@ -27,6 +27,8 @@ class RegisterViewModel extends BaseViewModel
 
   StreamController _isAllInputsValidStreamController =
       StreamController<void>.broadcast();
+  StreamController isUserLoggedInSuccessfullyStreamController =
+      StreamController<bool>();
 
   RegisterUseCase _regsiterUseCase;
 
@@ -61,6 +63,8 @@ class RegisterViewModel extends BaseViewModel
       // right -> success (data)
       print("Başarılı giriş yapıldı");
       inputState.add(ContentState());
+
+      isUserLoggedInSuccessfullyStreamController.add(true);
     });
   }
 
@@ -73,6 +77,7 @@ class RegisterViewModel extends BaseViewModel
     _passwordStreamController.close();
     _profilePictureStreamController.close();
     _isAllInputsValidStreamController.close();
+    isUserLoggedInSuccessfullyStreamController.close();
     super.dispose();
   }
 

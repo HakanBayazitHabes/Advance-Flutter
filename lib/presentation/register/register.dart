@@ -6,9 +6,11 @@ import 'package:advance_flutter/presentation/resources/color_manager.dart';
 import 'package:advance_flutter/presentation/resources/values_manager.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../app/app_prefs.dart';
 import '../../app/di.dart';
 import '../common/state_renderer/state_render_impl.dart';
 import '../resources/assets_manager.dart';
@@ -25,6 +27,7 @@ class RegisterView extends StatefulWidget {
 class _RegisterViewState extends State<RegisterView> {
   RegisterViewModel _viewModel = instance<RegisterViewModel>();
   ImagePicker picker = instance<ImagePicker>();
+  AppPreferences _appPreferences = instance<AppPreferences>();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -55,6 +58,13 @@ class _RegisterViewState extends State<RegisterView> {
     });
     _passwordTextEditingController.addListener(() {
       _viewModel.setPassword(_passwordTextEditingController.text);
+    });
+    _viewModel.isUserLoggedInSuccessfullyStreamController.stream
+        .listen((isSuccessLoggedIn) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        _appPreferences.setUserLoggedIn();
+        Navigator.pushReplacementNamed(context, Routes.mainRoute);
+      });
     });
   }
 
@@ -204,7 +214,6 @@ class _RegisterViewState extends State<RegisterView> {
               ),
               Padding(
                   padding: const EdgeInsets.only(
-
                       top: AppPadding.p12,
                       left: AppPadding.p28,
                       right: AppPadding.p28),
