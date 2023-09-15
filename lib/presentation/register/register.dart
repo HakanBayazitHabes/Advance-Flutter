@@ -84,7 +84,7 @@ class _RegisterViewState extends State<RegisterView> {
 
   Widget _getContentWidget() {
     return Container(
-      padding: const EdgeInsets.only(top: AppPadding.p60),
+      padding: const EdgeInsets.only(top: AppPadding.p30),
       child: SingleChildScrollView(
         child: Form(
           key: _formKey,
@@ -94,7 +94,7 @@ class _RegisterViewState extends State<RegisterView> {
                 image: AssetImage(ImageAssets.splashLogo),
               ),
               const SizedBox(
-                height: AppSize.s28,
+                height: AppSize.s12,
               ),
               Padding(
                 padding: const EdgeInsets.only(
@@ -117,9 +117,10 @@ class _RegisterViewState extends State<RegisterView> {
               Center(
                 child: Padding(
                   padding: const EdgeInsets.only(
+                      top: AppPadding.p24,
                       left: AppPadding.p28,
                       right: AppPadding.p28,
-                      bottom: AppPadding.p28),
+                      bottom: AppPadding.p12),
                   child: Row(
                     children: [
                       Expanded(
@@ -132,6 +133,7 @@ class _RegisterViewState extends State<RegisterView> {
                             },
                             initialSelection: '+33',
                             showCountryOnly: true,
+                            hideMainText: true,
                             showOnlyCountryWhenClosed: true,
                             favorite: ["+90", "+02", "+39"],
                           )),
@@ -156,7 +158,7 @@ class _RegisterViewState extends State<RegisterView> {
                 ),
               ),
               const SizedBox(
-                height: AppSize.s28,
+                height: AppSize.s12,
               ),
               Padding(
                 padding: const EdgeInsets.only(
@@ -177,7 +179,7 @@ class _RegisterViewState extends State<RegisterView> {
                 ),
               ),
               const SizedBox(
-                height: AppSize.s28,
+                height: AppSize.s24,
               ),
               Padding(
                 padding: const EdgeInsets.only(
@@ -198,12 +200,16 @@ class _RegisterViewState extends State<RegisterView> {
                 ),
               ),
               const SizedBox(
-                height: AppSize.s28,
+                height: AppSize.s12,
               ),
               Padding(
                   padding: const EdgeInsets.only(
-                      left: AppPadding.p28, right: AppPadding.p28),
+
+                      top: AppPadding.p12,
+                      left: AppPadding.p28,
+                      right: AppPadding.p28),
                   child: Container(
+                    height: AppSize.s40,
                     decoration: BoxDecoration(
                         border: Border.all(color: ColorManager.lightGrey)),
                     child: GestureDetector(
@@ -283,7 +289,7 @@ class _RegisterViewState extends State<RegisterView> {
   }
 
   Widget _imagePickedByUser(File? image) {
-    if (image == null && image!.path.isNotEmpty) {
+    if (image != null && image!.path.isNotEmpty) {
       return Image.file(image);
     } else {
       return Container();
@@ -295,29 +301,27 @@ class _RegisterViewState extends State<RegisterView> {
         context: context,
         builder: (BuildContext context) {
           return SafeArea(
-            child: Container(
-              child: Wrap(
-                children: [
-                  ListTile(
-                    trailing: Icon(Icons.arrow_forward),
-                    leading: Icon(Icons.camera),
-                    title: Text(AppStrings.photoGallery),
-                    onTap: () {
-                      _imageFormGallery();
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  ListTile(
-                    trailing: Icon(Icons.arrow_forward),
-                    leading: Icon(Icons.camera_alt_rounded),
-                    title: Text(AppStrings.photoCamera),
-                    onTap: () {
-                      _imageFormCamera();
-                      Navigator.of(context).pop();
-                    },
-                  )
-                ],
-              ),
+            child: Wrap(
+              children: [
+                ListTile(
+                  trailing: Icon(Icons.arrow_forward),
+                  leading: Icon(Icons.camera),
+                  title: Text(AppStrings.photoGallery),
+                  onTap: () {
+                    _imageFormGallery();
+                    Navigator.of(context).pop();
+                  },
+                ),
+                ListTile(
+                  trailing: Icon(Icons.arrow_forward),
+                  leading: Icon(Icons.camera_alt_rounded),
+                  title: Text(AppStrings.photoCamera),
+                  onTap: () {
+                    _imageFormCamera();
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
             ),
           );
         });
