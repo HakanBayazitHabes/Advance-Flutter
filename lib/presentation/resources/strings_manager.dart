@@ -17,6 +17,7 @@ class AppStrings {
   static const String skip = "Skip";
 
   static const String userName = "Username";
+  static const String mobileNumber = "Mobile Number";
   static const String userNameError = "Username is wrong";
   static const String passwordError = "Password is wrong";
   static const String password = "Password";
@@ -30,7 +31,12 @@ class AppStrings {
   static const String ok = "ok";
 
   static const String success = "Success";
+  static const String profilePicture = "Profile Picture";
   static const String emailHint = 'email_hint';
   static const String invalidEmail = "invalid_email";
   static const String resetPassword = "reset_password";
+  static const String photoGallery = "Photo From Gallery";
+  static const String photoCamera = "Photo From Camera";
+  static const String register = "Register";
+  static const String haveAccount = "Already have an account? Login";
 }
