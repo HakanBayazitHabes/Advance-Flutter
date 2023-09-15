@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:html';
+import 'dart:io';
 
 import 'package:advance_flutter/presentation/base/baseviewmodel.dart';
 
@@ -28,7 +28,7 @@ class RegisterViewModel extends BaseViewModel
 
   RegisterUseCase _regsiterUseCase;
 
-  var registerViewObject = RegisterObject("", "", "", "", "");
+  var registerViewObject = RegisterObject("", "", "", "", "", "");
 
   RegisterViewModel(this._regsiterUseCase);
 
@@ -124,10 +124,91 @@ class RegisterViewModel extends BaseViewModel
   bool _isPasswordValid(String password) {
     return password.length >= 8;
   }
+
+  @override
+  setCountryCode(String countryCode) {
+    if (countryCode.isNotEmpty) {
+      // update register view object wit countryCode value
+      registerViewObject =
+          registerViewObject.copyWith(countryMobileCode: countryCode);
+    } else {
+      //reset countryCode value in register view object
+      registerViewObject = registerViewObject.copyWith(countryMobileCode: "");
+    }
+  }
+
+  @override
+  setEmail(String email) {
+    if (isEmailValid(email)) {
+      // update register view object wit email value
+      registerViewObject = registerViewObject.copyWith(email: email);
+    } else {
+      //reset email value in register view object
+      registerViewObject = registerViewObject.copyWith(email: "");
+    }
+  }
+
+  @override
+  setMobileNumber(String mobileNumber) {
+    if (_isMobilNumberValid(mobileNumber)) {
+      // update register view object wit mobileNumber value
+      registerViewObject =
+          registerViewObject.copyWith(mobileNumber: mobileNumber);
+    } else {
+      //reset mobileNumber value in register view object
+      registerViewObject = registerViewObject.copyWith(mobileNumber: "");
+    }
+  }
+
+  @override
+  setPassword(String password) {
+    if (_isPasswordValid(password)) {
+      // update register view object wit password value
+      registerViewObject = registerViewObject.copyWith(password: password);
+    } else {
+      //reset password value in register view object
+      registerViewObject = registerViewObject.copyWith(password: "");
+    }
+  }
+
+  @override
+  setProfilePicture(File file) {
+    if (file.path.isNotEmpty) {
+      // update register view object wit profilePicture value
+      registerViewObject =
+          registerViewObject.copyWith(profilePicture: file.path);
+    } else {
+      //reset profilePicture value in register view object
+      registerViewObject = registerViewObject.copyWith(profilePicture: "");
+    }
+  }
+
+  @override
+  setUserName(String userName) {
+    if (_isUserNameValid(userName)) {
+      // update register view object wit username value
+      registerViewObject = registerViewObject.copyWith(userName: userName);
+    } else {
+      //reset username value in register view object
+      registerViewObject = registerViewObject.copyWith(userName: "");
+    }
+  }
 }
 
 abstract mixin class RegisterViewModelInput {
   register();
+
+  setUserName(String userName);
+
+  setMobileNumber(String mobileNumber);
+
+  setCountryCode(String countryCode);
+
+  setEmail(String email);
+
+  setPassword(String password);
+
+  setProfilePicture(File file);
 
   Sink get inputUserName;
 
