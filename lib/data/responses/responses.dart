@@ -83,7 +83,7 @@ class ForgotPasswordResponse extends BaseResponse {
 @JsonSerializable()
 class ServiceResponse {
   @JsonKey(name: "id")
-  String? id;
+  int? id;
   @JsonKey(name: "title")
   String? title;
   @JsonKey(name: "image")
@@ -100,28 +100,28 @@ class ServiceResponse {
 }
 
 @JsonSerializable()
-class StoresResponse {
+class StoreResponse {
   @JsonKey(name: "id")
-  String? id;
+  int? id;
   @JsonKey(name: "title")
   String? title;
   @JsonKey(name: "image")
   String? image;
 
-  StoresResponse(this.id, this.title, this.image);
+  StoreResponse(this.id, this.title, this.image);
 
   // from json
-  factory StoresResponse.fromJson(Map<String, dynamic> json) =>
-      _$StoresResponseFromJson(json);
+  factory StoreResponse.fromJson(Map<String, dynamic> json) =>
+      _$StoreResponseFromJson(json);
 
   // to json
-  Map<String, dynamic> toJson() => _$StoresResponseToJson(this);
+  Map<String, dynamic> toJson() => _$StoreResponseToJson(this);
 }
 
 @JsonSerializable()
-class BannersResponse {
+class BannerResponse {
   @JsonKey(name: "id")
-  String? id;
+  int? id;
   @JsonKey(name: "title")
   String? title;
   @JsonKey(name: "image")
@@ -129,25 +129,24 @@ class BannersResponse {
   @JsonKey(name: "link")
   String? link;
 
-  BannersResponse(this.id, this.title, this.image, this.link);
+  BannerResponse(this.id, this.title, this.image, this.link);
 
   // from json
-  factory BannersResponse.fromJson(Map<String, dynamic> json) =>
-      _$BannersResponseFromJson(json);
+  factory BannerResponse.fromJson(Map<String, dynamic> json) =>
+      _$BannerResponseFromJson(json);
 
   // to json
-  Map<String, dynamic> toJson() => _$BannersResponseToJson(this);
+  Map<String, dynamic> toJson() => _$BannerResponseToJson(this);
 }
 
-
 @JsonSerializable()
-class HomeDataResponse{
+class HomeDataResponse {
   @JsonKey(name: "services")
   List<ServiceResponse>? services;
   @JsonKey(name: "stores")
-  List<StoresResponse>? stores;
+  List<StoreResponse>? stores;
   @JsonKey(name: "banners")
-  List<BannersResponse>? banners;
+  List<BannerResponse>? banners;
 
   HomeDataResponse(this.services, this.stores, this.banners);
 

@@ -84,7 +84,7 @@ Map<String, dynamic> _$ForgotPasswordResponseToJson(
 
 ServiceResponse _$ServiceResponseFromJson(Map<String, dynamic> json) =>
     ServiceResponse(
-      json['id'] as String?,
+      json['id'] as int?,
       json['title'] as String?,
       json['image'] as String?,
     );
@@ -96,29 +96,29 @@ Map<String, dynamic> _$ServiceResponseToJson(ServiceResponse instance) =>
       'image': instance.image,
     };
 
-StoresResponse _$StoresResponseFromJson(Map<String, dynamic> json) =>
-    StoresResponse(
-      json['id'] as String?,
+StoreResponse _$StoreResponseFromJson(Map<String, dynamic> json) =>
+    StoreResponse(
+      json['id'] as int?,
       json['title'] as String?,
       json['image'] as String?,
     );
 
-Map<String, dynamic> _$StoresResponseToJson(StoresResponse instance) =>
+Map<String, dynamic> _$StoreResponseToJson(StoreResponse instance) =>
     <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
       'image': instance.image,
     };
 
-BannersResponse _$BannersResponseFromJson(Map<String, dynamic> json) =>
-    BannersResponse(
-      json['id'] as String?,
+BannerResponse _$BannerResponseFromJson(Map<String, dynamic> json) =>
+    BannerResponse(
+      json['id'] as int?,
       json['title'] as String?,
       json['image'] as String?,
       json['link'] as String?,
     );
 
-Map<String, dynamic> _$BannersResponseToJson(BannersResponse instance) =>
+Map<String, dynamic> _$BannerResponseToJson(BannerResponse instance) =>
     <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
@@ -132,10 +132,10 @@ HomeDataResponse _$HomeDataResponseFromJson(Map<String, dynamic> json) =>
           ?.map((e) => ServiceResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
       (json['stores'] as List<dynamic>?)
-          ?.map((e) => StoresResponse.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => StoreResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
       (json['banners'] as List<dynamic>?)
-          ?.map((e) => BannersResponse.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => BannerResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
