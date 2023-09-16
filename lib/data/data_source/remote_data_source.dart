@@ -30,8 +30,8 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
   Future<AuthenticationResponse> register(
       RegisterRequest registerRequest) async {
     return await _appServiceClient.register(
-        registerRequest.country_mobile_code,
-        registerRequest.user_name,
+        registerRequest.countryMobileCode,
+        registerRequest.userName,
         registerRequest.email,
         registerRequest.password,
         registerRequest.mobileNumber,
