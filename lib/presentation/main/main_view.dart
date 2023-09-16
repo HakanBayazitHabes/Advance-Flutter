@@ -47,8 +47,8 @@ class _MainViewState extends State<MainView> {
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: ColorManager.black,
-              blurRadius: AppSize.s1_5,
+              color: ColorManager.lightGrey,
+              blurRadius: AppSize.s1,
             ),
           ],
         ),
@@ -58,10 +58,15 @@ class _MainViewState extends State<MainView> {
           currentIndex: _currentIndex,
           onTap: onTap,
           items: [
-            BottomNavigationBarItem(icon: Icon(Icons.home)),
-            BottomNavigationBarItem(icon: Icon(Icons.search)),
-            BottomNavigationBarItem(icon: Icon(Icons.notifications)),
-            BottomNavigationBarItem(icon: Icon(Icons.settings)),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.home), label: AppStrings.home),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.search), label: AppStrings.search),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.notifications),
+                label: AppStrings.notifications),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.settings), label: AppStrings.settings),
           ],
         ),
       ),
