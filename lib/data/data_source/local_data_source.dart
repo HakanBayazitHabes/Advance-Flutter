@@ -20,7 +20,7 @@ class LocalDataSourceImplementer implements LocalDataSource {
   Map<String, CachedItem> cacheMap = Map();
 
   @override
-  Future<HomeResponse> getHome() {
+  Future<HomeResponse> getHome() async {
     CachedItem? cachedItem = cacheMap[CACHE_HOME_KEY];
 
     if (cachedItem != null && cachedItem.isValid(CACHE_HOME_INTERVAL)) {

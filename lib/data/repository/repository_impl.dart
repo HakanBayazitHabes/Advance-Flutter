@@ -12,8 +12,8 @@ import '../data_source/remote_data_source.dart';
 import '../network/network_info.dart';
 
 class RepositoryImpl extends Repository {
-  RemoteDataSource _remoteDataSource;
-  LocalDataSource _localDataSource;
+  final RemoteDataSource _remoteDataSource;
+  final LocalDataSource _localDataSource;
   NetworkInfo networkInfo;
 
   RepositoryImpl(
