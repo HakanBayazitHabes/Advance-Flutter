@@ -1,5 +1,7 @@
+import 'package:advance_flutter/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:advance_flutter/presentation/main/home/home_viewmodel.dart';
 import 'package:advance_flutter/presentation/resources/strings_manager.dart';
+import 'package:advance_flutter/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
 
 import '../../../app/di.dart';
@@ -27,10 +29,57 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Center(
+      child: SingleChildScrollView(
+          child: StreamBuilder<FlowState>(
+        stream: _viewModel.outputState,
+        builder: (context, snapshot) {
+          return snapshot.data?.getScreenWidget(context, _getContentWidgets(),
+                  () {
+                _viewModel.start();
+              }) ??
+              Container();
+        },
+      )),
+    );
+  }
+
+  Widget _getContentWidgets() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _getBannersCarousel(),
+        _getSection(AppStrings.services),
+        _getService(),
+        _getSection(AppStrings.stores),
+        _getStore(),
+      ],
+    );
+  }
+
+  Widget _getSection(String title) {
+    return Padding(
+      padding: EdgeInsets.only(
+          top: AppPadding.p12,
+          left: AppPadding.p12,
+          right: AppPadding.p12,
+          bottom: AppPadding.p8),
       child: Text(
-        AppStrings.home,
+        title,
+        style: Theme.of(context).textTheme.headline3,
       ),
     );
+  }
+
+  Widget _getBannersCarousel() {
+    return Center();
+  }
+
+  Widget _getService() {
+    return Center();
+  }
+
+  Widget _getStore() {
+    return Center();
   }
 
   @override
