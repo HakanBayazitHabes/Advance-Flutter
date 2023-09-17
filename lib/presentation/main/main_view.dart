@@ -5,7 +5,7 @@ import 'package:advance_flutter/presentation/resources/strings_manager.dart';
 import 'package:advance_flutter/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
 
-import 'home_page.dart';
+import 'home/home_page.dart';
 import 'notification_page.dart';
 
 class MainView extends StatefulWidget {
