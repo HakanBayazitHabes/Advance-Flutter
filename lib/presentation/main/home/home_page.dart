@@ -34,16 +34,15 @@ class _HomePageState extends State<HomePage> {
     return Center(
       child: SingleChildScrollView(
           child: StreamBuilder<FlowState>(
-            stream: _viewModel.outputState,
-            builder: (context, snapshot) {
-              return snapshot.data?.getScreenWidget(
-                  context, _getContentWidgets(),
-                      () {
-                    _viewModel.start();
-                  }) ??
-                  Container();
-            },
-          )),
+        stream: _viewModel.outputState,
+        builder: (context, snapshot) {
+          return snapshot.data?.getScreenWidget(context, _getContentWidgets(),
+                  () {
+                _viewModel.start();
+              }) ??
+              Container();
+        },
+      )),
     );
   }
 
@@ -69,10 +68,7 @@ class _HomePageState extends State<HomePage> {
           bottom: AppPadding.p8),
       child: Text(
         title,
-        style: Theme
-            .of(context)
-            .textTheme
-            .headline3,
+        style: Theme.of(context).textTheme.headline3,
       ),
     );
   }
@@ -89,25 +85,24 @@ class _HomePageState extends State<HomePage> {
     if (banners != null) {
       return CarouselSlider(
         items: banners
-            .map((banner) =>
-            SizedBox(
-              width: double.infinity,
-              child: Card(
-                elevation: AppSize.s1_5,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(AppSize.s8),
-                  side: BorderSide(
-                      color: ColorManager.white, width: AppSize.s1_5),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(AppSize.s12),
-                  child: Image.network(
-                    banner.image,
-                    fit: BoxFit.cover,
+            .map((banner) => SizedBox(
+                  width: double.infinity,
+                  child: Card(
+                    elevation: AppSize.s1_5,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(AppSize.s8),
+                      side: BorderSide(
+                          color: ColorManager.white, width: AppSize.s1_5),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(AppSize.s12),
+                      child: Image.network(
+                        banner.image,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ))
+                ))
             .toList(),
         options: CarouselOptions(
           height: AppSize.s190,
@@ -119,18 +114,73 @@ class _HomePageState extends State<HomePage> {
     } else {
       return Container();
     }
+  }
 
-    Widget _getService() {
-      return Center();
-    }
+  Widget _getService() {
+    return StreamBuilder<List<Service>>(
+        stream: _viewModel.outputServices,
+        builder: (context, snapshot) {
+          return _getServicesWidget(snapshot.data);
+        });
+  }
 
-    Widget _getStore() {
-      return Center();
-    }
-
-    @override
-    void dispose() {
-      _viewModel.dispose();
-      super.dispose();
+  Widget _getServicesWidget(List<Service>? services) {
+    if (services != null) {
+      return Padding(
+        padding: EdgeInsets.only(left: AppPadding.p12, right: AppPadding.p12),
+        child: Container(
+          height: AppSize.s140,
+          margin: EdgeInsets.symmetric(vertical: AppMargin.m12),
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: services
+                .map(
+                  (services) => Card(
+                    elevation: AppSize.s4,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(AppSize.s8),
+                      side: BorderSide(
+                          color: ColorManager.white, width: AppSize.s1_5),
+                    ),
+                    child: Column(children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(AppSize.s12),
+                        child: Image.network(
+                          services.image,
+                          fit: BoxFit.cover,
+                          height: AppSize.s130,
+                          width: AppSize.s130,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(AppPadding.p8),
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            services.title,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      )
+                    ]),
+                  ),
+                )
+                .toList(),
+          ),
+        ),
+      );
+    } else {
+      return Container();
     }
   }
+
+  Widget _getStore() {
+    return Center();
+  }
+
+  @override
+  void dispose() {
+    _viewModel.dispose();
+    super.dispose();
+  }
+}
