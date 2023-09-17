@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 import '../../../app/di.dart';
 import '../../resources/color_manager.dart';
+import '../../resources/routes_manager.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -175,7 +176,46 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _getStore() {
-    return Center();
+    return StreamBuilder<List<Store>>(
+        stream: _viewModel.outputStores,
+        builder: (context, snapshot) {
+          return _getStoresWidget(snapshot.data);
+        });
+  }
+
+  Widget _getStoresWidget(List<Store>? stores) {
+    if (stores != null) {
+      return Padding(
+        padding: EdgeInsets.only(
+            left: AppPadding.p12, right: AppPadding.p12, top: AppPadding.p12),
+        child: Flex(direction: Axis.vertical, children: [
+          GridView.count(
+            crossAxisSpacing: AppSize.s8,
+            mainAxisSpacing: AppSize.s8,
+            physics: ScrollPhysics(),
+            shrinkWrap: true,
+            crossAxisCount: 2,
+            children: List.generate(stores.length, (index) {
+              return InkWell(
+                onTap: () {
+                  //navigate to store details screen
+                  Navigator.of(context).pushNamed(Routes.storeDetailRoute);
+                },
+                child: Card(
+                  elevation: AppSize.s4,
+                  child: Image.network(
+                    stores[index].image,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              );
+            }),
+          )
+        ]),
+      );
+    } else {
+      return Container();
+    }
   }
 
   @override
