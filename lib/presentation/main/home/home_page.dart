@@ -149,8 +149,8 @@ class _HomePageState extends State<HomePage> {
                         child: Image.network(
                           services.image,
                           fit: BoxFit.cover,
-                          height: AppSize.s130,
-                          width: AppSize.s130,
+                          height: AppSize.s100,
+                          width: AppSize.s90,
                         ),
                       ),
                       Padding(
